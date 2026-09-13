@@ -31,27 +31,27 @@ export function ServiceModal({
       onClick={onClose}
     >
       <div
-        className="bg-card border border-subtle rounded-2xl max-w-lg w-full p-8 relative"
+        className="bg-card border border-subtle rounded-2xl max-w-xl w-full p-9 relative"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           aria-label="Close"
           onClick={onClose}
-          className="absolute top-4 right-5 text-faint text-lg"
+          className="absolute top-4 right-5 text-faint text-xl"
         >
           &times;
         </button>
-        <div className="text-electric-light text-xs tracking-widest mb-2">{categoryLabel}</div>
-        <h3 className="text-heading text-2xl font-extrabold mb-3 font-heading">{name}</h3>
-        <p className="text-body text-sm leading-relaxed mb-5">{description}</p>
-        {disclaimer && <p className="text-faint text-xs leading-relaxed mb-5 italic">{disclaimer}</p>}
+        <div className="text-electric-light text-sm tracking-widest mb-2">{categoryLabel}</div>
+        <h3 className="text-heading text-3xl font-extrabold mb-4 font-heading">{name}</h3>
+        <p className="text-body text-base leading-relaxed mb-5">{description}</p>
+        {disclaimer && <p className="text-faint text-sm leading-relaxed mb-5 italic">{disclaimer}</p>}
         {priceRows && priceRows.length > 0 ? (
           <div className="border-t border-subtle pt-4">
             {priceRows.map((row, index) => (
               <div
                 key={row.label}
-                className={`flex justify-between py-2 text-sm text-nav ${
+                className={`flex justify-between py-2.5 text-base text-nav ${
                   index > 0 ? "border-t border-subtle" : ""
                 }`}
               >
@@ -61,9 +61,9 @@ export function ServiceModal({
             ))}
           </div>
         ) : (
-          <div className="border-t border-subtle pt-4 text-sm text-nav">Contact for Pricing</div>
+          <div className="border-t border-subtle pt-4 text-base text-nav">Contact for Pricing</div>
         )}
-        <NeonButton type="button" className="w-full rounded-lg py-3 mt-5 text-center">
+        <NeonButton type="button" className="w-full rounded-lg py-3.5 mt-5 text-center text-base">
           Book This Service
         </NeonButton>
       </div>

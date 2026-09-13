@@ -11,13 +11,13 @@ export function ContactInfo() {
   return (
     <div className="flex flex-col gap-6">
       {ROWS.map((row) => (
-        <div key={row.label} className="flex gap-3.5 items-start">
-          <div className="w-9 h-9 rounded-lg border border-default flex items-center justify-center text-electric shrink-0">
+        <div key={row.label} className="flex gap-4 items-start">
+          <div className="w-11 h-11 rounded-lg border border-default flex items-center justify-center text-electric text-lg shrink-0">
             {row.icon}
           </div>
           <div>
-            <div className="text-heading text-sm font-semibold">{row.label}</div>
-            <div className="text-faint text-xs">{row.note}</div>
+            <div className="text-heading text-base font-semibold">{row.label}</div>
+            <div className="text-faint text-sm">{row.note}</div>
           </div>
         </div>
       ))}
@@ -28,7 +28,7 @@ export function ContactInfo() {
             key={social.label}
             href={social.href}
             aria-label={social.label}
-            className="w-9 h-9 rounded-full border border-default flex items-center justify-center text-nav text-xs"
+            className="w-11 h-11 rounded-full border border-default flex items-center justify-center text-nav text-sm"
           >
             {social.label}
           </a>

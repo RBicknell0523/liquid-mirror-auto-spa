@@ -50,7 +50,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         <div className="relative">
           {/* Hover highlight */}
           <div
-            className="absolute h-[30px] transition-all duration-300 ease-out bg-hover-subtle rounded-[6px]"
+            className="absolute h-[38px] transition-all duration-300 ease-out bg-hover-subtle rounded-[6px]"
             style={{
               ...hoverStyle,
               opacity: hoveredIndex !== null ? 1 : 0,
@@ -74,14 +74,14 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                 role="tab"
                 aria-selected={index === activeIndex}
                 className={cn(
-                  "px-3 py-2 cursor-pointer transition-colors duration-300 h-[30px]",
+                  "px-4 py-2 cursor-pointer transition-colors duration-300 h-[38px]",
                   index === activeIndex ? "text-heading" : "text-nav",
                 )}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => onTabChange(tab.id)}
               >
-                <div className="text-sm font-medium leading-5 whitespace-nowrap flex items-center justify-center h-full">
+                <div className="text-base font-medium leading-5 whitespace-nowrap flex items-center justify-center h-full">
                   {tab.label}
                 </div>
               </div>

@@ -38,9 +38,9 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card border border-subtle rounded-2xl p-8 flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="bg-card border border-subtle rounded-2xl p-9 flex flex-col gap-5">
       <div className="grid grid-cols-2 gap-4">
-        <label htmlFor="contact-name" className="flex flex-col gap-1.5 text-muted text-xs">
+        <label htmlFor="contact-name" className="flex flex-col gap-1.5 text-muted text-sm">
           NAME
           <input
             id="contact-name"
@@ -48,10 +48,10 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             value={values.name}
             onChange={handleChange}
             required
-            className="bg-void border border-subtle rounded-lg h-10 px-3 text-heading text-sm"
+            className="bg-void border border-subtle rounded-lg h-12 px-4 text-heading text-base"
           />
         </label>
-        <label htmlFor="contact-phone" className="flex flex-col gap-1.5 text-muted text-xs">
+        <label htmlFor="contact-phone" className="flex flex-col gap-1.5 text-muted text-sm">
           PHONE
           <input
             id="contact-phone"
@@ -60,12 +60,12 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             value={values.phone}
             onChange={handleChange}
             required
-            className="bg-void border border-subtle rounded-lg h-10 px-3 text-heading text-sm"
+            className="bg-void border border-subtle rounded-lg h-12 px-4 text-heading text-base"
           />
         </label>
       </div>
 
-      <label htmlFor="contact-email" className="flex flex-col gap-1.5 text-muted text-xs">
+      <label htmlFor="contact-email" className="flex flex-col gap-1.5 text-muted text-sm">
         EMAIL
         <input
           id="contact-email"
@@ -74,22 +74,22 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           value={values.email}
           onChange={handleChange}
           required
-          className="bg-void border border-subtle rounded-lg h-10 px-3 text-heading text-sm"
+          className="bg-void border border-subtle rounded-lg h-12 px-4 text-heading text-base"
         />
       </label>
 
-      <label htmlFor="contact-vehicle" className="flex flex-col gap-1.5 text-muted text-xs">
+      <label htmlFor="contact-vehicle" className="flex flex-col gap-1.5 text-muted text-sm">
         VEHICLE TYPE
         <input
           id="contact-vehicle"
           name="vehicleType"
           value={values.vehicleType}
           onChange={handleChange}
-          className="bg-void border border-subtle rounded-lg h-10 px-3 text-heading text-sm"
+          className="bg-void border border-subtle rounded-lg h-12 px-4 text-heading text-base"
         />
       </label>
 
-      <label htmlFor="contact-message" className="flex flex-col gap-1.5 text-muted text-xs">
+      <label htmlFor="contact-message" className="flex flex-col gap-1.5 text-muted text-sm">
         MESSAGE
         <textarea
           id="contact-message"
@@ -97,11 +97,11 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           rows={4}
           value={values.message}
           onChange={handleChange}
-          className="bg-void border border-subtle rounded-lg px-3 py-2 text-heading text-sm"
+          className="bg-void border border-subtle rounded-lg px-4 py-3 text-heading text-base"
         />
       </label>
 
-      <NeonButton type="submit" className="w-full rounded-lg py-3 mt-2 text-center">
+      <NeonButton type="submit" className="w-full rounded-lg py-3.5 mt-2 text-center text-base">
         Send Inquiry
       </NeonButton>
     </form>

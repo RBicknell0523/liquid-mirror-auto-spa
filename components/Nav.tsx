@@ -37,7 +37,7 @@ export function Nav() {
         <Tabs tabs={NAV_TABS} activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      <NeonButton href="#contact" className="rounded-md px-5 py-2.5">
+      <NeonButton href="#contact" className="rounded-md px-6 py-3 text-base">
         Book Now
       </NeonButton>
     </nav>

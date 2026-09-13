@@ -14,8 +14,8 @@ export function ContactSection() {
 
       <div className="max-w-5xl mx-auto relative">
         <div className="text-center mb-11">
-          <div className="text-electric-light text-xs tracking-widest mb-2">GET IN TOUCH</div>
-          <h2 className="chrome-text font-heading font-extrabold text-3xl">Let&apos;s Make It Shine</h2>
+          <div className="text-electric-light text-sm tracking-widest mb-2">GET IN TOUCH</div>
+          <h2 className="chrome-text font-heading font-extrabold text-4xl">Let&apos;s Make It Shine</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-10">

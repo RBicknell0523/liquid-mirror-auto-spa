@@ -12,7 +12,7 @@ interface ServiceCardProps {
 export function ServiceCard({ name, teaser, priceLabel, popular, onViewDetails }: ServiceCardProps) {
   return (
     <div
-      className={`flex flex-col rounded-2xl p-6 bg-card border relative ${
+      className={`flex flex-col rounded-2xl p-7 bg-card border relative ${
         popular ? "border-electric glow-electric" : "border-subtle"
       }`}
     >
@@ -21,10 +21,10 @@ export function ServiceCard({ name, teaser, priceLabel, popular, onViewDetails }
           MOST POPULAR
         </span>
       )}
-      <h3 className="text-heading text-lg font-bold mb-1.5 font-heading">{name}</h3>
-      <p className="text-muted text-sm leading-relaxed mb-4 flex-1">{teaser}</p>
-      <div className="text-electric text-xl font-extrabold mb-4">{priceLabel}</div>
-      <NeonButton type="button" onClick={onViewDetails} className="rounded-lg py-2.5 text-center">
+      <h3 className="text-heading text-xl font-bold mb-2 font-heading">{name}</h3>
+      <p className="text-muted text-base leading-relaxed mb-5 flex-1">{teaser}</p>
+      <div className="text-electric text-2xl font-extrabold mb-5">{priceLabel}</div>
+      <NeonButton type="button" onClick={onViewDetails} className="rounded-lg py-3 text-center text-base">
         View Details
       </NeonButton>
     </div>

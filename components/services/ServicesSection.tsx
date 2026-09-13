@@ -85,8 +85,8 @@ export function ServicesSection() {
     <section id="services" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <div className="text-electric-light text-xs tracking-widest mb-2">SERVICES &amp; PRICING</div>
-          <h2 className="chrome-text text-3xl font-extrabold font-heading">Choose Your Finish</h2>
+          <div className="text-electric-light text-sm tracking-widest mb-2">SERVICES &amp; PRICING</div>
+          <h2 className="chrome-text text-4xl font-extrabold font-heading">Choose Your Finish</h2>
         </div>
 
         <div className="flex justify-center mb-10">
@@ -111,7 +111,7 @@ export function ServicesSection() {
         </div>
 
         {activeCategory === CATEGORIES.ADDON && (
-          <p className="text-faint text-xs leading-relaxed mt-8 text-center max-w-2xl mx-auto">
+          <p className="text-faint text-sm leading-relaxed mt-8 text-center max-w-2xl mx-auto">
             {excessiveConditionNotice}
           </p>
         )}
