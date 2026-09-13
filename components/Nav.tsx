@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Tabs } from "@/components/ui/tabs"
+import { NeonButton } from "@/components/ui/NeonButton"
 
 const NAV_TABS = [
   { id: "home", label: "Home" },
@@ -36,12 +37,9 @@ export function Nav() {
         <Tabs tabs={NAV_TABS} activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      <a
-        href="#contact"
-        className="bg-electric-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-md glow-electric"
-      >
+      <NeonButton href="#contact" className="rounded-md px-5 py-2.5">
         Book Now
-      </a>
+      </NeonButton>
     </nav>
   )
 }

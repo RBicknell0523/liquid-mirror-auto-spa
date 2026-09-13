@@ -1,3 +1,5 @@
+import { NeonButton } from "@/components/ui/NeonButton"
+
 interface PriceRow {
   label: string
   value: number
@@ -61,12 +63,9 @@ export function ServiceModal({
         ) : (
           <div className="border-t border-subtle pt-4 text-sm text-nav">Contact for Pricing</div>
         )}
-        <button
-          type="button"
-          className="w-full bg-electric-gradient text-white text-sm font-semibold py-3 rounded-lg mt-5"
-        >
+        <NeonButton type="button" className="w-full rounded-lg py-3 mt-5 text-center">
           Book This Service
-        </button>
+        </NeonButton>
       </div>
     </div>
   )

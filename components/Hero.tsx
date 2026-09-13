@@ -1,5 +1,6 @@
 import { Nav } from "@/components/Nav"
 import { MetallicDivider } from "@/components/MetallicDivider"
+import { NeonButton } from "@/components/ui/NeonButton"
 
 export function Hero() {
   return (
@@ -26,18 +27,12 @@ export function Hero() {
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
-          <a
-            href="#contact"
-            className="bg-electric-gradient text-white font-semibold text-sm px-7 py-3.5 rounded-lg glow-electric"
-          >
+          <NeonButton href="#contact" className="rounded-lg px-7 py-3.5">
             Book Now
-          </a>
-          <a
-            href="#services"
-            className="border border-default text-heading font-semibold text-sm px-7 py-3.5 rounded-lg"
-          >
+          </NeonButton>
+          <NeonButton href="#services" className="rounded-lg px-7 py-3.5">
             View Services
-          </a>
+          </NeonButton>
         </div>
 
         <div className="flex flex-wrap justify-center gap-9 mt-14 text-faint text-xs tracking-wide">

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type ChangeEvent, type FormEvent } from "react"
+import { NeonButton } from "@/components/ui/NeonButton"
 
 export interface ContactFormValues {
   name: string
@@ -100,12 +101,9 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
         />
       </label>
 
-      <button
-        type="submit"
-        className="bg-electric-gradient text-white text-sm font-semibold py-3 rounded-lg glow-electric mt-2"
-      >
+      <NeonButton type="submit" className="w-full rounded-lg py-3 mt-2 text-center">
         Send Inquiry
-      </button>
+      </NeonButton>
     </form>
   )
 }

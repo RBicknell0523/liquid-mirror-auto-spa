@@ -1,3 +1,5 @@
+import { NeonButton } from "@/components/ui/NeonButton"
+
 interface ServiceCardProps {
   name: string
   teaser: string
@@ -22,15 +24,9 @@ export function ServiceCard({ name, teaser, priceLabel, popular, onViewDetails }
       <h3 className="text-heading text-lg font-bold mb-1.5 font-heading">{name}</h3>
       <p className="text-muted text-sm leading-relaxed mb-4 flex-1">{teaser}</p>
       <div className="text-electric text-xl font-extrabold mb-4">{priceLabel}</div>
-      <button
-        type="button"
-        onClick={onViewDetails}
-        className={`text-sm font-semibold text-center py-2.5 rounded-lg ${
-          popular ? "bg-electric-gradient text-white" : "border border-default text-heading"
-        }`}
-      >
+      <NeonButton type="button" onClick={onViewDetails} className="rounded-lg py-2.5 text-center">
         View Details
-      </button>
+      </NeonButton>
     </div>
   )
 }
