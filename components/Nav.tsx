@@ -28,7 +28,7 @@ export function Nav() {
           alt="Liquid Mirror Auto Spa"
           width={160}
           height={90}
-          className="h-10 w-auto"
+          className="h-16 w-auto"
           priority
         />
       </a>
