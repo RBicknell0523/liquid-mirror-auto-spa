@@ -1,7 +1,7 @@
 export function MetallicDivider() {
   return (
     <svg
-      viewBox="0 0 1200 70"
+      viewBox="0 0 1200 110"
       preserveAspectRatio="none"
       className="block w-full relative"
       role="presentation"
@@ -32,12 +32,12 @@ export function MetallicDivider() {
       </defs>
 
       <path
-        d="M0,35 C300,65 400,5 600,25 C800,45 900,5 1200,30 L1200,70 L0,70 Z"
+        d="M0,35 C300,65 400,5 600,25 C800,45 900,5 1200,30 L1200,80 C900,105 800,65 600,85 C400,105 300,45 0,75 Z"
         fill="url(#metalBase)"
         opacity="0.85"
       />
       <path
-        d="M0,35 C300,65 400,5 600,25 C800,45 900,5 1200,30 L1200,70 L0,70 Z"
+        d="M0,35 C300,65 400,5 600,25 C800,45 900,5 1200,30 L1200,80 C900,105 800,65 600,85 C400,105 300,45 0,75 Z"
         fill="url(#shineSweep)"
         opacity="0.8"
         style={{ mixBlendMode: "screen" }}
