@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero"
 import { About } from "@/components/About"
 import { ServicesSection } from "@/components/services/ServicesSection"
+import { ContactSection } from "@/components/contact/ContactSection"
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <Hero />
       <About />
       <ServicesSection />
-      <section id="contact" />
+      <ContactSection />
     </div>
   )
 }
