@@ -9,7 +9,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="bg-void py-24 px-6 relative overflow-hidden">
+    <section id="contact" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute -bottom-36 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(circle,rgba(47,169,255,0.12)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative">

@@ -3,7 +3,7 @@ import { MetallicDivider } from "@/components/MetallicDivider"
 
 export function Hero() {
   return (
-    <section id="home" className="bg-void relative overflow-hidden min-h-screen flex flex-col">
+    <section id="home" className="relative overflow-hidden min-h-screen flex flex-col">
       <Nav />
 
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(circle,rgba(47,169,255,0.18)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
