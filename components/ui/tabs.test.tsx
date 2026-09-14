@@ -46,4 +46,25 @@ describe("Tabs", () => {
       "true",
     )
   })
+
+  it("gives a hovered, non-active tab the metallic silver text color", async () => {
+    render(<Tabs tabs={tabs} activeTab="exterior" onTabChange={() => {}} />)
+    const interiorTab = screen.getByRole("tab", { name: "Interior" })
+    expect(interiorTab).toHaveClass("text-nav")
+
+    await userEvent.hover(interiorTab)
+    expect(interiorTab).toHaveClass("text-silver")
+
+    await userEvent.unhover(interiorTab)
+    expect(interiorTab).toHaveClass("text-nav")
+  })
+
+  it("keeps the active tab's heading color even while hovered", async () => {
+    render(<Tabs tabs={tabs} activeTab="exterior" onTabChange={() => {}} />)
+    const exteriorTab = screen.getByRole("tab", { name: "Exterior" })
+
+    await userEvent.hover(exteriorTab)
+    expect(exteriorTab).toHaveClass("text-heading")
+    expect(exteriorTab).not.toHaveClass("text-silver")
+  })
 })
