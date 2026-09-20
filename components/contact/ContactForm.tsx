@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type ChangeEvent, type FormEvent } from "react"
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { NeonButton } from "@/components/ui/NeonButton"
 
 export interface ContactFormValues {
@@ -13,6 +13,8 @@ export interface ContactFormValues {
 
 interface ContactFormProps {
   onSubmit: (values: ContactFormValues) => void
+  /** Set once (e.g. from the booking cart's "Request Booking" action) to fill the message field. */
+  prefillMessage?: string
 }
 
 const initialValues: ContactFormValues = {
@@ -23,8 +25,14 @@ const initialValues: ContactFormValues = {
   message: "",
 }
 
-export function ContactForm({ onSubmit }: ContactFormProps) {
+export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
   const [values, setValues] = useState<ContactFormValues>(initialValues)
+
+  useEffect(() => {
+    if (prefillMessage) {
+      setValues((prev) => ({ ...prev, message: prefillMessage }))
+    }
+  }, [prefillMessage])
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target

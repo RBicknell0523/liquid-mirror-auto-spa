@@ -12,6 +12,7 @@ interface ServiceModalProps {
   disclaimer?: string
   priceRows: PriceRow[] | null
   onClose: () => void
+  onAddToBooking: () => void
 }
 
 export function ServiceModal({
@@ -21,6 +22,7 @@ export function ServiceModal({
   disclaimer,
   priceRows,
   onClose,
+  onAddToBooking,
 }: ServiceModalProps) {
   return (
     <div
@@ -63,8 +65,12 @@ export function ServiceModal({
         ) : (
           <div className="border-t border-subtle pt-4 text-base text-nav">Contact for Pricing</div>
         )}
-        <NeonButton type="button" className="w-full rounded-lg py-3.5 mt-5 text-center text-base">
-          Book This Service
+        <NeonButton
+          type="button"
+          onClick={onAddToBooking}
+          className="w-full rounded-lg py-3.5 mt-5 text-center text-base"
+        >
+          Add to Booking
         </NeonButton>
       </div>
     </div>

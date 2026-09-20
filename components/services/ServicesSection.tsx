@@ -14,6 +14,7 @@ import {
 import { Tabs } from "@/components/ui/tabs"
 import { ServiceCard } from "./ServiceCard"
 import { ServiceModal } from "./ServiceModal"
+import { useBooking } from "@/components/booking/BookingContext"
 
 const TABS = [
   { id: CATEGORIES.EXTERIOR, label: CATEGORY_LABELS[CATEGORIES.EXTERIOR] },
@@ -27,10 +28,12 @@ interface ServiceCardData {
   teaser: string
   priceLabel: string
   popular: boolean
+  category: Category
   categoryLabel: string
   description: string
   disclaimer?: string
   priceRows: { label: string; value: number }[] | null
+  pricing: Record<VehicleSize, number> | null
 }
 
 function lowestPrice(pricing: Record<VehicleSize, number>) {
@@ -52,9 +55,11 @@ function buildCards(activeCategory: Category): ServiceCardData[] {
       teaser: addOn.description,
       priceLabel: "Contact for Pricing",
       popular: false,
+      category: CATEGORIES.ADDON,
       categoryLabel: "ADD-ON SERVICE",
       description: addOn.description,
       priceRows: null,
+      pricing: null,
     }))
   }
 
@@ -68,16 +73,19 @@ function buildCards(activeCategory: Category): ServiceCardData[] {
       teaser: service.teaser,
       priceLabel: `From $${lowestPrice(service.pricing)}`,
       popular: service.popular,
+      category: service.category,
       categoryLabel,
       description: service.description,
       disclaimer: service.disclaimer,
       priceRows: buildPriceRows(service.pricing),
+      pricing: service.pricing,
     }))
 }
 
 export function ServicesSection() {
   const [activeCategory, setActiveCategory] = useState<Category>(CATEGORIES.EXTERIOR)
   const [selectedService, setSelectedService] = useState<ServiceCardData | null>(null)
+  const { addItem } = useBooking()
 
   const cards = buildCards(activeCategory)
 
@@ -125,6 +133,16 @@ export function ServicesSection() {
           disclaimer={selectedService.disclaimer}
           priceRows={selectedService.priceRows}
           onClose={() => setSelectedService(null)}
+          onAddToBooking={() => {
+            addItem({
+              id: selectedService.id,
+              name: selectedService.name,
+              category: selectedService.category,
+              categoryLabel: selectedService.categoryLabel,
+              pricing: selectedService.pricing,
+            })
+            setSelectedService(null)
+          }}
         />
       )}
     </section>

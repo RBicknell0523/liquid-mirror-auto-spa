@@ -2,15 +2,18 @@
 
 import { ContactForm, type ContactFormValues } from "./ContactForm"
 import { ContactInfo } from "./ContactInfo"
+import { useBooking } from "@/components/booking/BookingContext"
 
 export function ContactSection() {
+  const { pendingMessage } = useBooking()
+
   function handleSubmit(values: ContactFormValues) {
     console.log("Contact form submitted", values)
   }
 
   return (
     <section id="contact" className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute -bottom-36 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(circle,rgba(47,169,255,0.12)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
+      <div className="absolute -bottom-36 left-1/2 -translate-x-1/2 w-200 h-100 bg-[radial-gradient(circle,rgba(47,169,255,0.12)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative">
         <div className="text-center mb-11">
@@ -19,7 +22,7 @@ export function ContactSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-10">
-          <ContactForm onSubmit={handleSubmit} />
+          <ContactForm onSubmit={handleSubmit} prefillMessage={pendingMessage} />
           <ContactInfo />
         </div>
       </div>

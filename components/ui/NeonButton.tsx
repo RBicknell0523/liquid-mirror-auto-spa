@@ -9,6 +9,7 @@ interface NeonButtonProps {
   onClick?: () => void
   type?: "button" | "submit"
   className?: string
+  disabled?: boolean
   "aria-label"?: string
 }
 
@@ -20,6 +21,7 @@ export function NeonButton({
   onClick,
   type = "button",
   className,
+  disabled = false,
   ...aria
 }: NeonButtonProps) {
   const ref = useRef<HTMLElement | null>(null)
@@ -32,7 +34,11 @@ export function NeonButton({
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange)
   }, [])
 
-  const sharedClassName = cn("btn-neon text-sm font-semibold", className)
+  const sharedClassName = cn(
+    "btn-neon text-sm font-semibold",
+    disabled && "opacity-40 pointer-events-none",
+    className,
+  )
 
   if (href) {
     return (
@@ -47,6 +53,7 @@ export function NeonButton({
       ref={ref as React.Ref<HTMLButtonElement>}
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={sharedClassName}
       {...aria}
     >

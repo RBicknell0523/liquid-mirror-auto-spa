@@ -14,6 +14,11 @@ const style = document.createElement("style")
 style.textContent = cssContent
 document.head.appendChild(style)
 
+// jsdom doesn't implement scrollIntoView; several components call it for anchor navigation.
+if (!HTMLElement.prototype.scrollIntoView) {
+  HTMLElement.prototype.scrollIntoView = function scrollIntoView() {}
+}
+
 afterEach(() => {
   cleanup()
 })

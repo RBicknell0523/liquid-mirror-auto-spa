@@ -13,6 +13,7 @@ const baseProps = {
     { label: "Large SUV / Truck", value: 80 },
   ],
   onClose: () => {},
+  onAddToBooking: () => {},
 }
 
 describe("ServiceModal", () => {
@@ -52,5 +53,12 @@ describe("ServiceModal", () => {
     render(<ServiceModal {...baseProps} onClose={onClose} />)
     await userEvent.click(screen.getByRole("dialog"))
     expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it("calls onAddToBooking when Add to Booking is clicked", async () => {
+    const onAddToBooking = vi.fn()
+    render(<ServiceModal {...baseProps} onAddToBooking={onAddToBooking} />)
+    await userEvent.click(screen.getByRole("button", { name: /add to booking/i }))
+    expect(onAddToBooking).toHaveBeenCalledTimes(1)
   })
 })

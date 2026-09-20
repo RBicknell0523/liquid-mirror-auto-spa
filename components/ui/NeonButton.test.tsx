@@ -34,6 +34,19 @@ describe("NeonButton", () => {
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
+  it("does not call onClick when disabled", async () => {
+    const onClick = vi.fn()
+    render(
+      <NeonButton onClick={onClick} disabled>
+        Request Booking
+      </NeonButton>,
+    )
+    const button = screen.getByRole("button", { name: "Request Booking" })
+    expect(button).toBeDisabled()
+    await userEvent.click(button)
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
   it("pauses its glow animation while the tab is hidden", () => {
     render(<NeonButton>Book Now</NeonButton>)
     const button = screen.getByRole("button", { name: "Book Now" })
