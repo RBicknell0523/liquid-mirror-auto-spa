@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, type ReactNode } from "react"
+import { format } from "date-fns"
 import { VEHICLE_SIZE_LABELS, type Category, type VehicleSize } from "@/data/services"
 
 export interface BookingItem {
@@ -23,11 +24,17 @@ interface BookingContextValue {
   totalItems: number
   totalPrice: number
   hasQuoteItems: boolean
+  selectedDate: Date | null
+  setSelectedDate: (date: Date) => void
+  selectedTime: string | null
+  setSelectedTime: (time: string) => void
   isOpen: boolean
   open: () => void
   close: () => void
   toggle: () => void
   pendingMessage: string
+  /** True once items, a date, and a time are all set — requestBooking is a no-op until then. */
+  canRequestBooking: boolean
   requestBooking: () => void
 }
 
@@ -36,6 +43,8 @@ const BookingContext = createContext<BookingContextValue | null>(null)
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<BookingItem[]>([])
   const [vehicleSize, setVehicleSize] = useState<VehicleSize>("sedan")
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+  const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [pendingMessage, setPendingMessage] = useState("")
 
@@ -74,9 +83,10 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     return sum + item.pricing[vehicleSize] * item.quantity
   }, 0)
   const hasQuoteItems = items.some((item) => !item.pricing)
+  const canRequestBooking = items.length > 0 && selectedDate !== null && selectedTime !== null
 
   function requestBooking() {
-    if (items.length === 0) return
+    if (!canRequestBooking || !selectedDate || !selectedTime) return
 
     const lines = items.map((item) => {
       const priceText = item.pricing
@@ -91,6 +101,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       totalPrice > 0
         ? `Estimated total: $${totalPrice}${hasQuoteItems ? " + quoted add-ons" : ""}`
         : "",
+      `Preferred date/time: ${format(selectedDate, "EEEE, MMMM d, yyyy")} at ${selectedTime}`,
     ]
       .filter(Boolean)
       .join("\n")
@@ -110,11 +121,16 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     totalItems,
     totalPrice,
     hasQuoteItems,
+    selectedDate,
+    setSelectedDate,
+    selectedTime,
+    setSelectedTime,
     isOpen,
     open: () => setIsOpen(true),
     close: () => setIsOpen(false),
     toggle: () => setIsOpen((prev) => !prev),
     pendingMessage,
+    canRequestBooking,
     requestBooking,
   }
 

@@ -97,21 +97,61 @@ describe("BookingCart", () => {
     expect(within(itemRow).getByText("$120")).toBeInTheDocument()
   })
 
-  it("disables Request Booking when the cart is empty and enables it once an item is added", async () => {
+  it("disables Choose Date & Time when the cart is empty and enables it once an item is added", async () => {
     renderCart()
     await userEvent.click(screen.getByRole("button", { name: /open booking cart/i }))
-    expect(screen.getByRole("button", { name: /request booking/i })).toBeDisabled()
+    expect(screen.getByRole("button", { name: /choose date & time/i })).toBeDisabled()
 
     await userEvent.click(screen.getByRole("button", { name: "Seed Add Wash" }))
-    expect(screen.getByRole("button", { name: /request booking/i })).toBeEnabled()
+    expect(screen.getByRole("button", { name: /choose date & time/i })).toBeEnabled()
   })
 
-  it("closes the panel when Request Booking is clicked", async () => {
+  it("advances to the schedule step and back again", async () => {
     renderCart()
     await userEvent.click(screen.getByRole("button", { name: "Seed Add Wash" }))
-    await userEvent.click(screen.getByRole("button", { name: /request booking/i }))
+    await userEvent.click(screen.getByRole("button", { name: /choose date & time/i }))
+
+    expect(screen.getByText("Pick a Date & Time")).toBeInTheDocument()
+    expect(screen.queryByText("Liquid Mirror Signature Wash")).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole("button", { name: /back to your booking/i }))
+    expect(screen.getByText("Your Booking")).toBeInTheDocument()
+    expect(screen.getByText("Liquid Mirror Signature Wash")).toBeInTheDocument()
+  })
+
+  it("disables Confirm Booking until a date and time are both chosen, then closes the panel once confirmed", async () => {
+    renderCart()
+    await userEvent.click(screen.getByRole("button", { name: "Seed Add Wash" }))
+    await userEvent.click(screen.getByRole("button", { name: /choose date & time/i }))
+
+    const confirmButton = screen.getByRole("button", { name: /confirm booking/i })
+    expect(confirmButton).toBeDisabled()
+
+    const dayButtons = within(screen.getByTestId("calendar-days")).getAllByRole("button")
+    const enabledDay = dayButtons.find((button) => !button.hasAttribute("disabled"))
+    if (!enabledDay) throw new Error("Expected at least one selectable day in the current month")
+    await userEvent.click(enabledDay)
+    expect(confirmButton).toBeDisabled()
+
+    await userEvent.click(screen.getByRole("button", { name: "10:00 AM" }))
+    expect(confirmButton).toBeEnabled()
+
+    await userEvent.click(confirmButton)
     // AnimatePresence removes the panel asynchronously once its exit transition finishes.
     await waitForElementToBeRemoved(() => screen.queryByRole("dialog"))
+  })
+
+  it("resets back to the cart view the next time it's opened", async () => {
+    renderCart()
+    await userEvent.click(screen.getByRole("button", { name: "Seed Add Wash" }))
+    await userEvent.click(screen.getByRole("button", { name: /choose date & time/i }))
+    expect(screen.getByText("Pick a Date & Time")).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole("button", { name: /close booking cart/i }))
+    await waitForElementToBeRemoved(() => screen.queryByRole("dialog"))
+
+    await userEvent.click(screen.getByRole("button", { name: /open booking cart/i }))
+    expect(screen.getByText("Your Booking")).toBeInTheDocument()
   })
 
   it("closes the panel when the backdrop is clicked", async () => {

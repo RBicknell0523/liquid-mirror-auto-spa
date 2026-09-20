@@ -33,7 +33,7 @@ describe("ContactSection", () => {
 
   it("prefills the message field with the booking cart's requested summary", async () => {
     function SeedAndRequest() {
-      const { addItem, requestBooking } = useBooking()
+      const { addItem, setSelectedDate, setSelectedTime, requestBooking } = useBooking()
       return (
         <>
           <button
@@ -50,6 +50,12 @@ describe("ContactSection", () => {
           >
             Seed
           </button>
+          <button type="button" onClick={() => setSelectedDate(new Date(2026, 9, 20))}>
+            Pick Date
+          </button>
+          <button type="button" onClick={() => setSelectedTime("10:00 AM")}>
+            Pick Time
+          </button>
           <button type="button" onClick={requestBooking}>
             Request
           </button>
@@ -65,6 +71,8 @@ describe("ContactSection", () => {
     )
 
     await userEvent.click(screen.getByRole("button", { name: "Seed" }))
+    await userEvent.click(screen.getByRole("button", { name: "Pick Date" }))
+    await userEvent.click(screen.getByRole("button", { name: "Pick Time" }))
     await userEvent.click(screen.getByRole("button", { name: "Request" }))
     const messageField = screen.getByLabelText(/message/i) as HTMLTextAreaElement
     expect(messageField.value).toContain("Liquid Mirror Signature Wash")

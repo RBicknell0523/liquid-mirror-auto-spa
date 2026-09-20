@@ -1,10 +1,12 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { format } from "date-fns"
 import { describe, expect, it } from "vitest"
 import { BookingProvider, useBooking } from "./BookingContext"
 import { CATEGORIES } from "@/data/services"
 
 const washPricing = { sedan: 60, midsize: 70, large: 80 }
+const TEST_DATE = new Date(2026, 9, 20) // October 20, 2026
 
 function Harness() {
   const {
@@ -17,7 +19,12 @@ function Harness() {
     totalItems,
     totalPrice,
     hasQuoteItems,
+    selectedDate,
+    setSelectedDate,
+    selectedTime,
+    setSelectedTime,
     isOpen,
+    canRequestBooking,
     requestBooking,
     pendingMessage,
   } = useBooking()
@@ -29,6 +36,9 @@ function Harness() {
       <div data-testid="has-quote-items">{String(hasQuoteItems)}</div>
       <div data-testid="is-open">{String(isOpen)}</div>
       <div data-testid="vehicle-size">{vehicleSize}</div>
+      <div data-testid="selected-date">{selectedDate ? selectedDate.toISOString() : ""}</div>
+      <div data-testid="selected-time">{selectedTime ?? ""}</div>
+      <div data-testid="can-request-booking">{String(canRequestBooking)}</div>
       <div data-testid="pending-message">{pendingMessage}</div>
       <ul>
         {items.map((item) => (
@@ -77,6 +87,12 @@ function Harness() {
       <button type="button" onClick={() => setVehicleSize("large")}>
         Set Large
       </button>
+      <button type="button" onClick={() => setSelectedDate(TEST_DATE)}>
+        Pick Date
+      </button>
+      <button type="button" onClick={() => setSelectedTime("10:00 AM")}>
+        Pick Time
+      </button>
       <button type="button" onClick={requestBooking}>
         Request Booking
       </button>
@@ -93,10 +109,12 @@ function renderHarness() {
 }
 
 describe("BookingContext", () => {
-  it("starts empty with sedan as the default vehicle size", () => {
+  it("starts empty with sedan as the default vehicle size and no date/time picked", () => {
     renderHarness()
     expect(screen.getByTestId("total-items")).toHaveTextContent("0")
     expect(screen.getByTestId("vehicle-size")).toHaveTextContent("sedan")
+    expect(screen.getByTestId("selected-date")).toHaveTextContent("")
+    expect(screen.getByTestId("selected-time")).toHaveTextContent("")
   })
 
   it("adds a new item and opens the cart", async () => {
@@ -153,14 +171,42 @@ describe("BookingContext", () => {
     expect(screen.getByTestId("total-price")).toHaveTextContent("0")
   })
 
-  it("builds a booking summary, closes the cart, and does nothing when empty", async () => {
+  it("stores the selected date and time", async () => {
     renderHarness()
+    await userEvent.click(screen.getByRole("button", { name: "Pick Date" }))
+    await userEvent.click(screen.getByRole("button", { name: "Pick Time" }))
+    expect(screen.getByTestId("selected-date")).toHaveTextContent(TEST_DATE.toISOString())
+    expect(screen.getByTestId("selected-time")).toHaveTextContent("10:00 AM")
+  })
 
-    // No-op when the cart is empty.
-    await userEvent.click(screen.getByRole("button", { name: "Request Booking" }))
-    expect(screen.getByTestId("pending-message")).toHaveTextContent("")
+  it("cannot request a booking until items, a date, and a time are all set", async () => {
+    renderHarness()
+    expect(screen.getByTestId("can-request-booking")).toHaveTextContent("false")
 
     await userEvent.click(screen.getByRole("button", { name: "Add Wash" }))
+    expect(screen.getByTestId("can-request-booking")).toHaveTextContent("false")
+
+    await userEvent.click(screen.getByRole("button", { name: "Pick Date" }))
+    expect(screen.getByTestId("can-request-booking")).toHaveTextContent("false")
+
+    await userEvent.click(screen.getByRole("button", { name: "Pick Time" }))
+    expect(screen.getByTestId("can-request-booking")).toHaveTextContent("true")
+  })
+
+  it("does nothing when requestBooking is called without a date/time even if items exist", async () => {
+    renderHarness()
+    await userEvent.click(screen.getByRole("button", { name: "Add Wash" }))
+    await userEvent.click(screen.getByRole("button", { name: "Request Booking" }))
+    expect(screen.getByTestId("pending-message")).toHaveTextContent("")
+    expect(screen.getByTestId("is-open")).toHaveTextContent("true")
+  })
+
+  it("builds a booking summary including the date/time and closes the cart", async () => {
+    renderHarness()
+
+    await userEvent.click(screen.getByRole("button", { name: "Add Wash" }))
+    await userEvent.click(screen.getByRole("button", { name: "Pick Date" }))
+    await userEvent.click(screen.getByRole("button", { name: "Pick Time" }))
     await userEvent.click(screen.getByRole("button", { name: "Request Booking" }))
 
     expect(screen.getByTestId("is-open")).toHaveTextContent("false")
@@ -168,5 +214,8 @@ describe("BookingContext", () => {
     expect(message).toContain("Liquid Mirror Signature Wash x1 ($60)")
     expect(message).toContain("Sedan / Coupe")
     expect(message).toContain("Estimated total: $60")
+    expect(message).toContain(
+      `Preferred date/time: ${format(TEST_DATE, "EEEE, MMMM d, yyyy")} at 10:00 AM`,
+    )
   })
 })
