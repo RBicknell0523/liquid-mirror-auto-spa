@@ -5,11 +5,20 @@ import { Minus, Plus, ShoppingCart, X } from "lucide-react"
 import { useBooking } from "./BookingContext"
 import { Tabs } from "@/components/ui/tabs"
 import { NeonButton } from "@/components/ui/NeonButton"
-import { VEHICLE_SIZE_LABELS, type VehicleSize } from "@/data/services"
+import { type VehicleSize } from "@/data/services"
 
-const VEHICLE_SIZE_TABS = (Object.keys(VEHICLE_SIZE_LABELS) as VehicleSize[]).map((id) => ({
+// Short labels so all three tabs fit inside the narrow cart panel — the
+// full names (used in the modal price table and booking summary) are too
+// wide for three to fit side by side at this width.
+const VEHICLE_SIZE_SHORT_LABELS: Record<VehicleSize, string> = {
+  sedan: "Sedan",
+  midsize: "Midsize",
+  large: "Large",
+}
+
+const VEHICLE_SIZE_TABS = (Object.keys(VEHICLE_SIZE_SHORT_LABELS) as VehicleSize[]).map((id) => ({
   id,
-  label: VEHICLE_SIZE_LABELS[id],
+  label: VEHICLE_SIZE_SHORT_LABELS[id],
 }))
 
 export function BookingCart() {
@@ -84,6 +93,7 @@ export function BookingCart() {
                   tabs={VEHICLE_SIZE_TABS}
                   activeTab={vehicleSize}
                   onTabChange={(id) => setVehicleSize(id as VehicleSize)}
+                  className="overflow-x-auto"
                 />
               </div>
 

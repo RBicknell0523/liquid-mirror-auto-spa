@@ -49,6 +49,18 @@ describe("BookingCart", () => {
     expect(screen.getByText(/no services added yet/i)).toBeInTheDocument()
   })
 
+  it("uses short vehicle-size tab labels so all three fit in the narrow panel", async () => {
+    renderCart()
+    await userEvent.click(screen.getByRole("button", { name: /open booking cart/i }))
+    expect(screen.getByRole("tab", { name: "Sedan" })).toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "Midsize" })).toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "Large" })).toBeInTheDocument()
+    // Regression guard: the full labels are too wide for three to fit side by side here.
+    expect(screen.queryByRole("tab", { name: "Sedan / Coupe" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Midsize SUV / Crossover" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Large SUV / Truck" })).not.toBeInTheDocument()
+  })
+
   it("shows an item count badge and the item once something is added", async () => {
     renderCart()
     await userEvent.click(screen.getByRole("button", { name: "Seed Add Wash" }))
@@ -81,7 +93,7 @@ describe("BookingCart", () => {
     const itemRow = screen.getByTestId("booking-item-signature-wash")
     expect(within(itemRow).getByText("$90")).toBeInTheDocument()
 
-    await userEvent.click(screen.getByRole("tab", { name: "Large SUV / Truck" }))
+    await userEvent.click(screen.getByRole("tab", { name: "Large" }))
     expect(within(itemRow).getByText("$120")).toBeInTheDocument()
   })
 
