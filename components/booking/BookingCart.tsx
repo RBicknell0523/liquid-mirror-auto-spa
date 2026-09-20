@@ -93,7 +93,7 @@ export function BookingCart() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className={cn(
                 "fixed top-0 right-0 h-full w-full bg-card border-l border-subtle z-50 flex flex-col p-6",
-                step === "cart" ? "max-w-sm" : "max-w-2xl",
+                step === "cart" ? "max-w-sm" : "max-w-md",
               )}
             >
               {step === "cart" ? (
