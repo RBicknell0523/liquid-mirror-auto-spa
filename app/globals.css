@@ -30,6 +30,7 @@ body {
 .text-electric-pale { color: #8fdcff; }
 .text-void { color: #050505; }
 .text-silver { color: #f3f5f7; }
+.text-error { color: #f87171; }
 
 .bg-electric-gradient {
   background: linear-gradient(180deg, #2fa9ff, #1c7fce);

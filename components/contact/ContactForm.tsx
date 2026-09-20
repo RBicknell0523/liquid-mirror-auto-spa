@@ -11,8 +11,10 @@ export interface ContactFormValues {
   message: string
 }
 
+type Status = "idle" | "submitting" | "success" | "error"
+
 interface ContactFormProps {
-  onSubmit: (values: ContactFormValues) => void
+  onSubmit: (values: ContactFormValues) => Promise<void>
   /** Set once (e.g. from the booking cart's "Request Booking" action) to fill the message field. */
   prefillMessage?: string
 }
@@ -27,6 +29,7 @@ const initialValues: ContactFormValues = {
 
 export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
   const [values, setValues] = useState<ContactFormValues>(initialValues)
+  const [status, setStatus] = useState<Status>("idle")
 
   useEffect(() => {
     if (prefillMessage) {
@@ -37,12 +40,19 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target
     setValues((prev) => ({ ...prev, [name]: value }))
+    if (status === "error") setStatus("idle")
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onSubmit(values)
-    setValues(initialValues)
+    setStatus("submitting")
+    try {
+      await onSubmit(values)
+      setValues(initialValues)
+      setStatus("success")
+    } catch {
+      setStatus("error")
+    }
   }
 
   return (
@@ -109,8 +119,23 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
         />
       </label>
 
-      <NeonButton type="submit" className="w-full rounded-lg py-3.5 mt-2 text-center text-base">
-        Send Inquiry
+      {status === "success" && (
+        <p role="status" className="text-electric-light text-sm">
+          Thanks — your inquiry has been sent. We&apos;ll be in touch soon.
+        </p>
+      )}
+      {status === "error" && (
+        <p role="alert" className="text-error text-sm">
+          Something went wrong sending your inquiry. Please try again, or call/email us directly.
+        </p>
+      )}
+
+      <NeonButton
+        type="submit"
+        disabled={status === "submitting"}
+        className="w-full rounded-lg py-3.5 mt-2 text-center text-base"
+      >
+        {status === "submitting" ? "Sending..." : "Send Inquiry"}
       </NeonButton>
     </form>
   )

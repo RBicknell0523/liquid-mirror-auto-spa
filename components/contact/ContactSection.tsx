@@ -7,8 +7,16 @@ import { useBooking } from "@/components/booking/BookingContext"
 export function ContactSection() {
   const { pendingMessage } = useBooking()
 
-  function handleSubmit(values: ContactFormValues) {
-    console.log("Contact form submitted", values)
+  async function handleSubmit(values: ContactFormValues) {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to submit contact form")
+    }
   }
 
   return (
