@@ -93,7 +93,6 @@ export function BookingCart() {
                   tabs={VEHICLE_SIZE_TABS}
                   activeTab={vehicleSize}
                   onTabChange={(id) => setVehicleSize(id as VehicleSize)}
-                  className="overflow-x-auto"
                 />
               </div>
 
