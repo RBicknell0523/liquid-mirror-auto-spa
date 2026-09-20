@@ -66,35 +66,35 @@ export function BookingCalendar({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-heading text-xl font-bold font-heading">
+      <div className="flex items-center justify-between mb-6">
+        <span className="text-heading text-2xl font-bold font-heading">
           {format(currentMonth, "MMMM yyyy")}
         </span>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             aria-label="Previous month"
             disabled={isViewingCurrentMonth}
             onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}
-            className="p-1.5 rounded-full text-nav hover:bg-hover-silver disabled:opacity-30 disabled:pointer-events-none"
+            className="p-2 rounded-full text-nav hover:bg-hover-silver disabled:opacity-30 disabled:pointer-events-none"
           >
-            <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+            <ChevronLeft className="w-5 h-5" aria-hidden="true" />
           </button>
           <button
             type="button"
             aria-label="Next month"
             onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}
-            className="p-1.5 rounded-full text-nav hover:bg-hover-silver"
+            className="p-2 rounded-full text-nav hover:bg-hover-silver"
           >
-            <ChevronRight className="w-4 h-4" aria-hidden="true" />
+            <ChevronRight className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
       </div>
 
-      <div data-testid="calendar-days" className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+      <div data-testid="calendar-days" className="flex gap-3 overflow-x-auto pb-3 -mx-1 px-1">
         {days.map((day) => (
-          <div key={day.date.toISOString()} className="flex flex-col items-center gap-1.5 shrink-0">
-            <span className="text-faint text-xs font-semibold">{format(day.date, "EEEEE")}</span>
+          <div key={day.date.toISOString()} className="flex flex-col items-center gap-2 shrink-0">
+            <span className="text-faint text-sm font-semibold">{format(day.date, "EEEEE")}</span>
             <button
               type="button"
               disabled={day.isDisabled}
@@ -102,7 +102,7 @@ export function BookingCalendar({
               aria-pressed={day.isSelected}
               onClick={() => onSelectDate(day.date)}
               className={cn(
-                "w-9 h-9 rounded-full text-sm font-semibold flex items-center justify-center relative",
+                "w-13 h-13 rounded-full text-lg font-semibold flex items-center justify-center relative",
                 day.isSelected && "bg-electric-gradient text-white",
                 !day.isSelected && !day.isDisabled && "text-heading hover:bg-hover-silver",
                 day.isDisabled && "text-faint opacity-40 pointer-events-none",
@@ -110,16 +110,16 @@ export function BookingCalendar({
             >
               {getDate(day.date)}
               {day.isToday && !day.isSelected && (
-                <span className="absolute bottom-1 w-1 h-1 rounded-full bg-electric" />
+                <span className="absolute bottom-1.5 w-1.5 h-1.5 rounded-full bg-electric" />
               )}
             </button>
           </div>
         ))}
       </div>
 
-      <div className="mt-5">
-        <div className="text-muted text-xs tracking-widest mb-2">SELECT A TIME</div>
-        <div className="grid grid-cols-3 gap-2">
+      <div className="mt-8">
+        <div className="text-muted text-sm tracking-widest mb-3">SELECT A TIME</div>
+        <div className="grid grid-cols-4 gap-3">
           {TIME_SLOTS.map((time) => (
             <button
               key={time}
@@ -127,7 +127,7 @@ export function BookingCalendar({
               aria-pressed={selectedTime === time}
               onClick={() => onSelectTime(time)}
               className={cn(
-                "text-xs font-semibold py-2 rounded-lg border",
+                "text-sm font-semibold py-3 rounded-lg border",
                 selectedTime === time
                   ? "border-electric bg-electric-gradient text-white"
                   : "border-default text-nav hover:border-electric-pale",

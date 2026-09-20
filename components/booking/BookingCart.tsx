@@ -7,6 +7,7 @@ import { useBooking } from "./BookingContext"
 import { BookingCalendar } from "./BookingCalendar"
 import { Tabs } from "@/components/ui/tabs"
 import { NeonButton } from "@/components/ui/NeonButton"
+import { cn } from "@/lib/utils"
 import { type VehicleSize } from "@/data/services"
 
 // Short labels so all three tabs fit inside the narrow cart panel — the
@@ -90,7 +91,10 @@ export function BookingCart() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="fixed top-0 right-0 h-full w-full max-w-sm bg-card border-l border-subtle z-50 flex flex-col p-6"
+              className={cn(
+                "fixed top-0 right-0 h-full w-full bg-card border-l border-subtle z-50 flex flex-col p-6",
+                step === "cart" ? "max-w-sm" : "max-w-2xl",
+              )}
             >
               {step === "cart" ? (
                 <>
