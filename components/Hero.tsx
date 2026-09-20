@@ -7,11 +7,11 @@ export function Hero() {
     <section id="home" className="relative overflow-hidden min-h-screen flex flex-col">
       <Nav />
 
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(circle,rgba(47,169,255,0.18)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-225 h-125 bg-[radial-gradient(circle,rgba(47,169,255,0.18)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
 
       <div className="relative flex-1 flex flex-col justify-center text-center px-6 py-16 max-w-3xl mx-auto">
         <div className="inline-block border border-default text-electric-pale text-sm tracking-widest px-5 py-2 rounded-full mb-8">
-          MOBILE DETAILING &amp; CERAMIC COATING
+          PROFESSIONAL DETAILING
         </div>
 
         <h1 className="font-heading font-extrabold text-5xl md:text-6xl leading-tight">
@@ -22,8 +22,8 @@ export function Hero() {
         </h1>
 
         <p className="text-body text-lg leading-relaxed mt-8 mb-10 max-w-xl mx-auto">
-          Premium mobile auto detailing that comes to you. Hand wash, paint correction, and ceramic
-          coatings that leave every panel looking liquid.
+          Premium professional auto detailing services. Hand wash, paint correction, and hydrophobic
+          coatings that leave every panel and surface looking liquid.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
@@ -37,8 +37,7 @@ export function Hero() {
 
         <div className="flex flex-wrap justify-center gap-9 mt-14 text-faint text-sm tracking-wide">
           <span>&#9733; 5.0 RATED</span>
-          <span>MOBILE &mdash; WE COME TO YOU</span>
-          <span>CERAMIC COATING CERTIFIED</span>
+          <span>PROFESSIONAL CLEANING AND PROTECTANTS</span>
         </div>
       </div>
 
