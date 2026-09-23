@@ -1,3 +1,4 @@
+import { Nav } from "@/components/Nav"
 import { Hero } from "@/components/Hero"
 import { About } from "@/components/About"
 import { ServicesSection } from "@/components/services/ServicesSection"
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <BookingProvider>
       <div className="min-h-screen">
+        <Nav />
         <Hero />
         <About />
         <ServicesSection />

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, type ReactNode } from "react"
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react"
 import { cn } from "@/lib/utils"
 
 interface NeonButtonProps {
@@ -9,6 +9,7 @@ interface NeonButtonProps {
   onClick?: () => void
   type?: "button" | "submit"
   className?: string
+  style?: CSSProperties
   disabled?: boolean
   "aria-label"?: string
 }
@@ -21,6 +22,7 @@ export function NeonButton({
   onClick,
   type = "button",
   className,
+  style,
   disabled = false,
   ...aria
 }: NeonButtonProps) {
@@ -42,7 +44,13 @@ export function NeonButton({
 
   if (href) {
     return (
-      <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} className={sharedClassName} {...aria}>
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={href}
+        className={sharedClassName}
+        style={style}
+        {...aria}
+      >
         {children}
       </a>
     )
@@ -55,6 +63,7 @@ export function NeonButton({
       onClick={onClick}
       disabled={disabled}
       className={sharedClassName}
+      style={style}
       {...aria}
     >
       {children}

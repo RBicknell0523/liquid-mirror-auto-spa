@@ -95,7 +95,7 @@ export function ServicesSection() {
     const cards = buildCards(activeCategory);
 
     return (
-        <section id="services" className="py-24 px-6">
+        <section id="services" className="py-24 px-6 scroll-mt-24">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-10">
                     <div className="text-electric-light text-sm tracking-widest mb-2">

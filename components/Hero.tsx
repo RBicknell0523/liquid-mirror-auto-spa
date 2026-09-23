@@ -1,12 +1,9 @@
-import { Nav } from "@/components/Nav"
 import { MetallicDivider } from "@/components/MetallicDivider"
 import { NeonButton } from "@/components/ui/NeonButton"
 
 export function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden min-h-screen flex flex-col">
-      <Nav />
-
+    <section id="home" className="relative overflow-hidden min-h-screen flex flex-col scroll-mt-24">
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-225 h-125 bg-[radial-gradient(circle,rgba(47,169,255,0.18)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
 
       <div className="relative flex-1 flex flex-col justify-center text-center px-6 py-16 max-w-3xl mx-auto">
