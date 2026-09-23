@@ -77,8 +77,11 @@ export function Nav() {
           type="button"
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="rounded-full w-11 h-11 p-0 flex items-center justify-center transition-opacity duration-150"
+          className="rounded-full w-11 h-11 p-0 transition-opacity duration-150"
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             opacity: backToTopOpacity,
             pointerEvents: isBackToTopHidden ? "none" : undefined,
           }}
