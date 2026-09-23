@@ -44,6 +44,10 @@ body {
   background-color: rgba(243, 245, 247, 0.12);
 }
 
+.bg-nav-scrim {
+  background-color: rgba(5, 5, 5, 0.55);
+}
+
 .chrome-text {
   background: linear-gradient(180deg, #ffffff 20%, #9298a0 100%);
   -webkit-background-clip: text;
