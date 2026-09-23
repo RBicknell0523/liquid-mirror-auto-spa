@@ -20,7 +20,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6 relative overflow-hidden scroll-mt-24">
+    <section id="contact" className="min-h-screen flex flex-col justify-center py-24 px-6 relative overflow-hidden scroll-mt-24">
       <div className="absolute -bottom-36 left-1/2 -translate-x-1/2 w-200 h-100 bg-[radial-gradient(circle,rgba(47,169,255,0.12)_0%,rgba(47,169,255,0)_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative">
