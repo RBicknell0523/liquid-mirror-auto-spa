@@ -44,7 +44,7 @@ export function Nav() {
   const isFaded = fadeOpacity <= 0.02
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 border-b border-subtle bg-void">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4">
       <a
         href="#home"
         aria-label="Liquid Mirror Auto Spa home"
