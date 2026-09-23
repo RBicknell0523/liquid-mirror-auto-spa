@@ -8,6 +8,12 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 .font-heading {
   font-family: 'Barlow Condensed', sans-serif;
 }
