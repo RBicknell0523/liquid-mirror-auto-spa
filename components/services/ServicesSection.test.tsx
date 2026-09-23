@@ -33,6 +33,8 @@ describe("ServicesSection", () => {
     await userEvent.click(screen.getByRole("tab", { name: "Add-On Services" }))
     expect(screen.getByText("Carpet & Upholstery Extraction")).toBeInTheDocument()
     expect(screen.getAllByText(/contact for pricing/i).length).toBeGreaterThan(0)
+    expect(screen.getByText("Engine Bay Detail")).toBeInTheDocument()
+    expect(screen.getByText("$50")).toBeInTheDocument()
     expect(screen.getByText(/excessive condition charge/i)).toBeInTheDocument()
   })
 

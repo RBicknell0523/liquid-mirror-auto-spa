@@ -53,13 +53,17 @@ function buildCards(activeCategory: Category): ServiceCardData[] {
             id: addOn.id,
             name: addOn.name,
             teaser: addOn.description,
-            priceLabel: "Contact for Pricing",
+            priceLabel: addOn.price != null ? `$${addOn.price}` : "Contact for Pricing",
             popular: false,
             category: CATEGORIES.ADDON,
             categoryLabel: "ADD-ON SERVICE",
             description: addOn.description,
-            priceRows: null,
-            pricing: null
+            disclaimer: addOn.disclaimer,
+            priceRows: addOn.price != null ? [{ label: "Price", value: addOn.price }] : null,
+            pricing:
+                addOn.price != null
+                    ? { sedan: addOn.price, midsize: addOn.price, large: addOn.price }
+                    : null
         }));
     }
 

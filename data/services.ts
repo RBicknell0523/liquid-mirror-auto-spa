@@ -35,6 +35,8 @@ export interface AddOnService {
   id: string
   name: string
   description: string
+  price?: number
+  disclaimer?: string
 }
 
 export const services: Service[] = [
@@ -118,24 +120,28 @@ export const addOnServices: AddOnService[] = [
     name: "Exterior Glass Treatment",
     description:
       "Hydrophobic protection for exterior glass designed to improve water repellency, visibility in wet conditions, and resistance to environmental contamination.",
+    price: 40,
   },
   {
     id: "wheel-protection",
     name: "Wheel Protection",
     description:
       "Hydrophobic protection applied to thoroughly cleaned wheel surfaces to enhance gloss and help reduce the adhesion of brake dust, road grime, and contamination.",
+    price: 30,
   },
   {
-    id: "exterior-rim-treatment",
-    name: "Exterior Rim Treatment",
+    id: "trim-restoration-protection",
+    name: "Trim Restoration & Protection",
     description:
       "Cleans, conditions, and protects applicable exterior plastic and rubber trim to restore a darker, refreshed appearance and provide protection from weathering.",
+    price: 30,
   },
   {
     id: "paint-decontamination",
     name: "Paint Decontamination",
     description:
       "Chemical and mechanical decontamination designed to remove embedded iron particles, bonded contaminants, and surface buildup, leaving the paint noticeably smoother and properly prepared for protection.",
+    price: 75,
   },
   {
     id: "one-step-paint-enhancement",
@@ -148,6 +154,29 @@ export const addOnServices: AddOnService[] = [
     name: "Multi-Step Paint Correction",
     description:
       "Advanced machine correction tailored to significantly reduce swirls, oxidation, scratches, and other paint defects while maximizing gloss and clarity. Vehicle inspection required for pricing.",
+  },
+  {
+    id: "engine-bay-detail",
+    name: "Engine Bay Detail",
+    description:
+      "Thorough cleaning and detailing of the engine bay, including degreasing and agitation of accessible surfaces, careful rinsing/steam cleaning as appropriate, drying, and dressing of plastic and rubber components for a clean, factory-fresh appearance.",
+    price: 50,
+  },
+  {
+    id: "premium-hydrophobic-protection",
+    name: "Premium Hydrophobic Protection",
+    description:
+      "Adds a premium hydrophobic protective treatment to exterior paint, glass, and plastics, enhancing gloss, slickness, and water beading while helping protect exterior surfaces from environmental contamination.",
+    price: 25,
+  },
+  {
+    id: "undercarriage-cleaning",
+    name: "Undercarriage Cleaning",
+    description:
+      "A thorough undercarriage cleaning featuring a high-pressure rinse using a specialized underbody cleaning attachment. Helps remove accumulated contaminants from accessible underside surfaces for a cleaner, better-maintained undercarriage.",
+    disclaimer:
+      "Vehicle Clearance: This service requires adequate ground clearance for our undercarriage cleaning equipment. Extremely low or modified vehicles may not be eligible. If access is limited, we'll let you know before performing the service.",
+    price: 30,
   },
 ]
 

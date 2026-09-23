@@ -33,11 +33,30 @@ describe("services data", () => {
     })
   })
 
-  it("has seven bookable add-on services with no fixed pricing", () => {
-    expect(addOnServices).toHaveLength(7)
-    addOnServices.forEach((addOn) => {
-      expect(addOn).not.toHaveProperty("pricing")
-    })
+  it("has ten bookable add-on services", () => {
+    expect(addOnServices).toHaveLength(10)
+  })
+
+  it("has fixed prices on the priced add-ons", () => {
+    expect(addOnServices.find((a) => a.id === "exterior-glass-treatment")?.price).toBe(40)
+    expect(addOnServices.find((a) => a.id === "wheel-protection")?.price).toBe(30)
+    expect(addOnServices.find((a) => a.id === "trim-restoration-protection")?.price).toBe(30)
+    expect(addOnServices.find((a) => a.id === "paint-decontamination")?.price).toBe(75)
+    expect(addOnServices.find((a) => a.id === "engine-bay-detail")?.price).toBe(50)
+    expect(addOnServices.find((a) => a.id === "premium-hydrophobic-protection")?.price).toBe(25)
+    expect(addOnServices.find((a) => a.id === "undercarriage-cleaning")?.price).toBe(30)
+  })
+
+  it("leaves quote-only add-ons without a fixed price", () => {
+    expect(addOnServices.find((a) => a.id === "carpet-upholstery-extraction")?.price).toBeUndefined()
+    expect(addOnServices.find((a) => a.id === "one-step-paint-enhancement")?.price).toBeUndefined()
+    expect(addOnServices.find((a) => a.id === "multi-step-paint-correction")?.price).toBeUndefined()
+  })
+
+  it("includes the vehicle clearance disclaimer for undercarriage cleaning", () => {
+    expect(addOnServices.find((a) => a.id === "undercarriage-cleaning")?.disclaimer).toMatch(
+      /vehicle clearance/i,
+    )
   })
 
   it("exposes vehicle size display labels", () => {
