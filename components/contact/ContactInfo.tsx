@@ -3,7 +3,6 @@ import { contactInfo } from "@/data/contactInfo"
 const ROWS = [
   { icon: "☎", label: contactInfo.phone, note: contactInfo.phoneNote },
   { icon: "✉", label: contactInfo.email, note: contactInfo.emailNote },
-  { icon: "●", label: contactInfo.serviceArea, note: contactInfo.serviceAreaNote },
   { icon: "⏰", label: contactInfo.hours, note: contactInfo.hoursNote },
 ]
 

@@ -4,11 +4,10 @@ import { ContactInfo } from "./ContactInfo"
 import { contactInfo } from "@/data/contactInfo"
 
 describe("ContactInfo", () => {
-  it("renders phone, email, service area, and hours", () => {
+  it("renders phone, email, and hours", () => {
     render(<ContactInfo />)
     expect(screen.getByText(contactInfo.phone)).toBeInTheDocument()
     expect(screen.getByText(contactInfo.email)).toBeInTheDocument()
-    expect(screen.getByText(contactInfo.serviceArea)).toBeInTheDocument()
     expect(screen.getByText(contactInfo.hours)).toBeInTheDocument()
   })
 
