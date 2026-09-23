@@ -12,6 +12,7 @@ import {
     type VehicleSize
 } from "@/data/services";
 import { Tabs } from "@/components/ui/tabs";
+import { Reveal } from "@/components/ui/Reveal";
 import { ServiceCard } from "./ServiceCard";
 import { ServiceModal } from "./ServiceModal";
 import { useBooking } from "@/components/booking/BookingContext";
@@ -96,7 +97,7 @@ export function ServicesSection() {
 
     return (
         <section id="services" className="min-h-screen flex flex-col justify-center py-24 px-6 scroll-mt-24">
-            <div className="max-w-6xl mx-auto">
+            <Reveal className="max-w-6xl mx-auto">
                 <div className="text-center mb-10">
                     <div className="text-electric-light text-sm tracking-widest mb-2">
                         SERVICES &amp; PRICING
@@ -132,7 +133,7 @@ export function ServicesSection() {
                         {excessiveConditionNotice}
                     </p>
                 )}
-            </div>
+            </Reveal>
 
             {selectedService && (
                 <ServiceModal

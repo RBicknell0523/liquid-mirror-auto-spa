@@ -1,7 +1,9 @@
+import { Reveal } from "@/components/ui/Reveal"
+
 export function About() {
   return (
     <section id="about" className="min-h-screen flex flex-col justify-center py-24 px-6 scroll-mt-24">
-      <div className="max-w-2xl mx-auto text-center">
+      <Reveal className="max-w-2xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 border border-default text-electric-pale text-sm tracking-widest px-5 py-2 rounded-full mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-electric-gradient glow-electric-dot" />
           100% VETERAN OWNED &amp; OPERATED
@@ -34,7 +36,7 @@ export function About() {
           isn&apos;t to get you in and out as quickly as possible &mdash; it&apos;s to deliver a
           level of professional quality that only Liquid Mirror can offer.
         </p>
-      </div>
+      </Reveal>
     </section>
   )
 }

@@ -19,6 +19,23 @@ if (!HTMLElement.prototype.scrollIntoView) {
   HTMLElement.prototype.scrollIntoView = function scrollIntoView() {}
 }
 
+// jsdom doesn't implement IntersectionObserver; motion's whileInView needs one to exist.
+const windowWithIO = window as unknown as { IntersectionObserver?: typeof IntersectionObserver }
+if (!windowWithIO.IntersectionObserver) {
+  class MockIntersectionObserver implements IntersectionObserver {
+    readonly root: Element | Document | null = null
+    readonly rootMargin: string = ""
+    readonly thresholds: ReadonlyArray<number> = []
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords(): IntersectionObserverEntry[] {
+      return []
+    }
+  }
+  windowWithIO.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
+}
+
 afterEach(() => {
   cleanup()
 })
