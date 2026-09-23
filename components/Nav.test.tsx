@@ -79,4 +79,31 @@ describe("Nav", () => {
 
     rafSpy.mockRestore()
   })
+
+  it("shows the Back to Top button only after scrolling, and scrolls to top when clicked", async () => {
+    const rafSpy = vi.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+      cb(0)
+      return 0
+    })
+    const scrollTo = vi.fn()
+    window.scrollTo = scrollTo
+
+    render(<Nav />)
+    const backToTop = screen.getByRole("button", { name: /back to top/i })
+
+    expect(backToTop.style.opacity).toBe("0")
+    expect(backToTop.style.pointerEvents).toBe("none")
+
+    Object.defineProperty(window, "scrollY", { value: 400, configurable: true })
+    act(() => {
+      window.dispatchEvent(new Event("scroll"))
+    })
+    expect(backToTop.style.opacity).toBe("1")
+    expect(backToTop.style.pointerEvents).not.toBe("none")
+
+    await userEvent.click(backToTop)
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" })
+
+    rafSpy.mockRestore()
+  })
 })

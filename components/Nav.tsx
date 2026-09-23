@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { ArrowUp } from "lucide-react"
 import { Tabs } from "@/components/ui/tabs"
 import { NeonButton } from "@/components/ui/NeonButton"
 
@@ -40,8 +41,14 @@ export function Nav() {
     document.getElementById(tabId)?.scrollIntoView({ behavior: "smooth" })
   }
 
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   const fadeOpacity = Math.max(0, 1 - scrollY / FADE_DISTANCE)
   const isFaded = fadeOpacity <= 0.02
+  const backToTopOpacity = 1 - fadeOpacity
+  const isBackToTopHidden = backToTopOpacity <= 0.02
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-nav-scrim backdrop-blur-md">
@@ -65,13 +72,28 @@ export function Nav() {
         <Tabs tabs={NAV_TABS} activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      <NeonButton
-        href="#contact"
-        className="rounded-md px-6 py-3 text-base transition-opacity duration-150"
-        style={{ opacity: fadeOpacity, pointerEvents: isFaded ? "none" : undefined }}
-      >
-        Book Now
-      </NeonButton>
+      <div className="flex items-center gap-3">
+        <NeonButton
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Back to top"
+          className="rounded-full w-11 h-11 p-0 flex items-center justify-center transition-opacity duration-150"
+          style={{
+            opacity: backToTopOpacity,
+            pointerEvents: isBackToTopHidden ? "none" : undefined,
+          }}
+        >
+          <ArrowUp className="w-5 h-5" aria-hidden="true" />
+        </NeonButton>
+
+        <NeonButton
+          href="#contact"
+          className="rounded-md px-6 py-3 text-base transition-opacity duration-150"
+          style={{ opacity: fadeOpacity, pointerEvents: isFaded ? "none" : undefined }}
+        >
+          Book Now
+        </NeonButton>
+      </div>
     </nav>
   )
 }
