@@ -77,4 +77,22 @@ describe("ContactSection", () => {
     const messageField = screen.getByLabelText(/message/i) as HTMLTextAreaElement
     expect(messageField.value).toContain("Liquid Mirror Signature Wash")
   })
+
+  it("does not show the booking confirmation banner on a normal visit", () => {
+    renderContact()
+    expect(screen.queryByText(/deposit received/i)).not.toBeInTheDocument()
+  })
+
+  it("shows the booking confirmation banner when redirected back from Square, then cleans up the URL", () => {
+    window.history.pushState({}, "", "/?booking=confirmed#contact")
+
+    renderContact()
+
+    expect(screen.getByText(/deposit received/i)).toBeInTheDocument()
+    expect(screen.getByRole("status")).toHaveTextContent(/\$15 deposit went through/i)
+    expect(window.location.search).toBe("")
+    expect(window.location.hash).toBe("#contact")
+
+    window.history.pushState({}, "", "/")
+  })
 })
