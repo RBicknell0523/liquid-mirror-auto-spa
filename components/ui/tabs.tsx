@@ -46,8 +46,8 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
     }, [activeIndex])
 
     return (
-      <div ref={ref} className={cn("relative", className)} {...props}>
-        <div className="relative">
+      <div ref={ref} className={cn("relative overflow-x-auto", className)} {...props}>
+        <div className="relative w-max">
           {/* Hover highlight */}
           <div
             className="absolute h-[38px] transition-all duration-300 ease-out bg-hover-silver rounded-[6px]"

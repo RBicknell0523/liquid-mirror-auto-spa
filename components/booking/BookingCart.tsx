@@ -138,7 +138,7 @@ export function BookingCart() {
                             type="button"
                             aria-label={`Remove ${item.name}`}
                             onClick={() => removeItem(item.id)}
-                            className="text-faint shrink-0"
+                            className="text-faint shrink-0 -m-1.5 p-1.5"
                           >
                             <X className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>

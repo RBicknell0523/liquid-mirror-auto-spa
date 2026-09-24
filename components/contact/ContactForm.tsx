@@ -56,8 +56,8 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card border border-subtle rounded-2xl p-9 flex flex-col gap-5">
-      <div className="grid grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="bg-card border border-subtle rounded-2xl p-6 sm:p-9 flex flex-col gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <label htmlFor="contact-name" className="flex flex-col gap-1.5 text-muted text-sm">
           NAME
           <input

@@ -36,6 +36,23 @@ if (!windowWithIO.IntersectionObserver) {
   windowWithIO.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
 }
 
+// jsdom doesn't implement matchMedia; used to detect the desktop breakpoint
+// and (via motion's useReducedMotion) the user's reduced-motion preference.
+if (!window.matchMedia) {
+  window.matchMedia = function matchMedia(query: string): MediaQueryList {
+    return {
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }
+  }
+}
+
 afterEach(() => {
   cleanup()
 })
