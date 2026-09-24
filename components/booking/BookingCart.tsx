@@ -9,6 +9,7 @@ import { Tabs } from "@/components/ui/tabs"
 import { NeonButton } from "@/components/ui/NeonButton"
 import { cn } from "@/lib/utils"
 import { type VehicleSize } from "@/data/services"
+import { BOOKING_DEPOSIT_USD } from "@/lib/bookingDeposit"
 
 // Short labels so all three tabs fit inside the narrow cart panel — the
 // full names (used in the modal price table and booking summary) are too
@@ -176,7 +177,7 @@ export function BookingCart() {
                   </div>
 
                   <div className="border-t border-subtle pt-4 mt-4">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-1.5">
                       <span className="text-heading text-sm font-semibold">Estimated Total</span>
                       <span className="text-heading text-lg font-bold">
                         ${totalPrice}
@@ -185,6 +186,9 @@ export function BookingCart() {
                         )}
                       </span>
                     </div>
+                    <p className="text-faint text-xs leading-relaxed mb-4">
+                      ${BOOKING_DEPOSIT_USD} deposit due now to confirm — remainder due at service.
+                    </p>
                     <NeonButton
                       type="button"
                       onClick={() => setStep("schedule")}

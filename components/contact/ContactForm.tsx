@@ -2,6 +2,7 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { NeonButton } from "@/components/ui/NeonButton"
+import { BOOKING_DEPOSIT_USD } from "@/lib/bookingDeposit"
 
 export interface ContactFormValues {
   name: string
@@ -172,7 +173,9 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
       >
         {status === "submitting" && "Sending..."}
         {status === "redirecting" && "Redirecting to payment..."}
-        {status !== "submitting" && status !== "redirecting" && (prefillMessage ? "Pay $15 Deposit & Book" : "Send Inquiry")}
+        {status !== "submitting" &&
+          status !== "redirecting" &&
+          (prefillMessage ? `Pay $${BOOKING_DEPOSIT_USD} Deposit & Book` : "Send Inquiry")}
       </NeonButton>
     </form>
   )

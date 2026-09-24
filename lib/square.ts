@@ -1,9 +1,7 @@
 import { SquareClient, SquareEnvironment } from "square"
+import { BOOKING_DEPOSIT_USD } from "./bookingDeposit"
 
-// Deposit charged at booking time to hold the slot; the remaining balance
-// (which varies with vehicle condition — see excessiveConditionNotice) is
-// collected in person after service.
-export const BOOKING_DEPOSIT_AMOUNT_CENTS = BigInt(1500)
+export const BOOKING_DEPOSIT_AMOUNT_CENTS = BigInt(BOOKING_DEPOSIT_USD * 100)
 
 let client: SquareClient | null = null
 

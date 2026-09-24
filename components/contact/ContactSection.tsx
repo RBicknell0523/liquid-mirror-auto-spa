@@ -6,6 +6,7 @@ import { ContactForm, type ContactFormValues } from "./ContactForm"
 import { ContactInfo } from "./ContactInfo"
 import { Reveal } from "@/components/ui/Reveal"
 import { useBooking } from "@/components/booking/BookingContext"
+import { BOOKING_DEPOSIT_USD } from "@/lib/bookingDeposit"
 
 export function ContactSection() {
   const { pendingMessage } = useBooking()
@@ -65,7 +66,7 @@ export function ContactSection() {
             <div>
               <div className="text-heading text-base font-bold mb-1">Deposit received — you&apos;re booked!</div>
               <p className="text-body text-sm leading-relaxed">
-                Your $15 deposit went through and your requested date and time are on our radar.
+                Your ${BOOKING_DEPOSIT_USD} deposit went through and your requested date and time are on our radar.
                 We&apos;ll be in touch shortly to confirm the details.
               </p>
             </div>
