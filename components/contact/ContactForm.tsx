@@ -11,7 +11,7 @@ export interface ContactFormValues {
   message: string
 }
 
-type Status = "idle" | "submitting" | "success" | "error"
+type Status = "idle" | "submitting" | "redirecting" | "success" | "error"
 
 interface ContactFormProps {
   onSubmit: (values: ContactFormValues) => Promise<void>
@@ -25,6 +25,24 @@ const initialValues: ContactFormValues = {
   email: "",
   vehicleType: "",
   message: "",
+}
+
+// Returns the Square checkout URL, or null if it couldn't be created — the
+// caller falls back to a normal success message rather than blocking the
+// already-submitted inquiry on a payment-link failure.
+async function createDepositCheckout(description: string, buyerEmail: string): Promise<string | null> {
+  try {
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ description, buyerEmail }),
+    })
+    if (!response.ok) return null
+    const data = (await response.json()) as { url?: string }
+    return data.url ?? null
+  } catch {
+    return null
+  }
 }
 
 export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
@@ -53,6 +71,18 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
     setStatus("submitting")
     try {
       await onSubmit(values)
+
+      // A booking confirmation (message prefilled from the cart) collects a
+      // deposit via Square; a general inquiry just needs the info sent above.
+      if (prefillMessage) {
+        setStatus("redirecting")
+        const checkoutUrl = await createDepositCheckout(prefillMessage, values.email)
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl
+          return
+        }
+      }
+
       setValues(initialValues)
       setStatus("success")
     } catch {
@@ -137,10 +167,12 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
 
       <NeonButton
         type="submit"
-        disabled={status === "submitting"}
+        disabled={status === "submitting" || status === "redirecting"}
         className="w-full rounded-lg py-3.5 mt-2 text-center text-base"
       >
-        {status === "submitting" ? "Sending..." : "Send Inquiry"}
+        {status === "submitting" && "Sending..."}
+        {status === "redirecting" && "Redirecting to payment..."}
+        {status !== "submitting" && status !== "redirecting" && (prefillMessage ? "Pay $15 Deposit & Book" : "Send Inquiry")}
       </NeonButton>
     </form>
   )

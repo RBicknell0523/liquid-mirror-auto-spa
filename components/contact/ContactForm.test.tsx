@@ -90,4 +90,62 @@ describe("ContactForm", () => {
     await userEvent.type(screen.getByLabelText(/name/i), " Jr.")
     expect(screen.queryByRole("alert")).not.toBeInTheDocument()
   })
+
+  describe("booking confirmation (prefillMessage set)", () => {
+    it("creates a Square checkout link and redirects to it after submitting", async () => {
+      const onSubmit = vi.fn().mockResolvedValue(undefined)
+      const fetchMock = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ url: "https://squareupsandbox.com/checkout/abc123" }),
+      })
+      vi.stubGlobal("fetch", fetchMock)
+      const originalLocation = window.location
+      Object.defineProperty(window, "location", {
+        writable: true,
+        configurable: true,
+        value: { ...originalLocation, href: "" },
+      })
+
+      render(<ContactForm onSubmit={onSubmit} prefillMessage="Booking summary for Jordan." />)
+      await userEvent.type(screen.getByLabelText(/name/i), "Jordan Smith")
+      await userEvent.type(screen.getByLabelText(/phone/i), "5551234567")
+      await userEvent.type(screen.getByLabelText(/email/i), "jordan@example.com")
+      await userEvent.click(screen.getByRole("button", { name: /pay \$15 deposit/i }))
+
+      await vi.waitFor(() => {
+        expect(window.location.href).toBe("https://squareupsandbox.com/checkout/abc123")
+      })
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/checkout",
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({
+            description: "Booking summary for Jordan.",
+            buyerEmail: "jordan@example.com",
+          }),
+        }),
+      )
+
+      Object.defineProperty(window, "location", { writable: true, configurable: true, value: originalLocation })
+      vi.unstubAllGlobals()
+    })
+
+    it("falls back to the normal success message if the checkout link can't be created", async () => {
+      const onSubmit = vi.fn().mockResolvedValue(undefined)
+      vi.stubGlobal(
+        "fetch",
+        vi.fn().mockResolvedValue({ ok: false, json: async () => ({ error: "nope" }) }),
+      )
+
+      render(<ContactForm onSubmit={onSubmit} prefillMessage="Booking summary for Jordan." />)
+      await userEvent.type(screen.getByLabelText(/name/i), "Jordan Smith")
+      await userEvent.type(screen.getByLabelText(/phone/i), "5551234567")
+      await userEvent.type(screen.getByLabelText(/email/i), "jordan@example.com")
+      await userEvent.click(screen.getByRole("button", { name: /pay \$15 deposit/i }))
+
+      expect(await screen.findByRole("status")).toHaveTextContent(/inquiry has been sent/i)
+
+      vi.unstubAllGlobals()
+    })
+  })
 })
