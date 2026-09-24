@@ -54,6 +54,20 @@ body {
   background-color: rgba(5, 5, 5, 0.55);
 }
 
+/* Keeps a horizontally-scrollable row (e.g. the Tabs primitive) usable
+   without showing a scrollbar track — most browsers only ever show this
+   as a thin overlay bar during an active scroll gesture, but Windows'
+   classic (non-overlay) scrollbars render a persistent track/thumb for
+   any overflow-x: auto container, even a sub-pixel one. */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .chrome-text {
   background: linear-gradient(180deg, #ffffff 20%, #9298a0 100%);
   -webkit-background-clip: text;

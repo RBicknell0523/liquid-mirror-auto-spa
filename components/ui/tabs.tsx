@@ -46,7 +46,11 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
     }, [activeIndex])
 
     return (
-      <div ref={ref} className={cn("relative overflow-x-auto overflow-y-hidden", className)} {...props}>
+      <div
+        ref={ref}
+        className={cn("relative overflow-x-auto overflow-y-hidden scrollbar-hide", className)}
+        {...props}
+      >
         <div className="relative w-max pb-2">
           {/* Hover highlight */}
           <div
