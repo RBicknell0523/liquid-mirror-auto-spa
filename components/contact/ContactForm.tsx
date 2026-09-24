@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
+import { useState, type ChangeEvent, type FormEvent } from "react"
 import { NeonButton } from "@/components/ui/NeonButton"
 
 export interface ContactFormValues {
@@ -31,11 +31,16 @@ export function ContactForm({ onSubmit, prefillMessage }: ContactFormProps) {
   const [values, setValues] = useState<ContactFormValues>(initialValues)
   const [status, setStatus] = useState<Status>("idle")
 
-  useEffect(() => {
+  // Fills the message field when prefillMessage changes, adjusted during
+  // render (comparing against the previous prop value) instead of an
+  // effect, so it doesn't cost an extra render.
+  const [prevPrefillMessage, setPrevPrefillMessage] = useState(prefillMessage)
+  if (prefillMessage !== prevPrefillMessage) {
+    setPrevPrefillMessage(prefillMessage)
     if (prefillMessage) {
       setValues((prev) => ({ ...prev, message: prefillMessage }))
     }
-  }, [prefillMessage])
+  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import { ChevronLeft, Minus, Plus, ShoppingCart, X } from "lucide-react"
 import { useBooking } from "./BookingContext"
@@ -50,10 +50,14 @@ export function BookingCart() {
   const [step, setStep] = useState<Step>("cart")
 
   // Always land back on the cart view for a fresh open, rather than
-  // wherever the user happened to leave off last time.
-  useEffect(() => {
+  // wherever the user happened to leave off last time. Adjusted during
+  // render (comparing against the previous isOpen) instead of an effect,
+  // so opening the cart doesn't cost an extra render.
+  const [wasOpen, setWasOpen] = useState(isOpen)
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen)
     if (isOpen) setStep("cart")
-  }, [isOpen])
+  }
 
   return (
     <>
