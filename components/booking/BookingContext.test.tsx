@@ -6,7 +6,7 @@ import { BookingProvider, useBooking } from "./BookingContext"
 import { CATEGORIES } from "@/data/services"
 
 const washPricing = { sedan: 60, midsize: 70, large: 80 }
-const TEST_DATE = new Date(2026, 9, 20) // October 20, 2026
+const TEST_DATE = new Date(2026, 9, 24) // Saturday, October 24, 2026 — a weekend date, since "10:00 AM" below is a weekend-only slot
 
 function Harness() {
   const {

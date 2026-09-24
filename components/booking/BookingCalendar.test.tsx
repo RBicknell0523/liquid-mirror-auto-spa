@@ -72,7 +72,7 @@ describe("BookingCalendar", () => {
     expect(onSelectDate).not.toHaveBeenCalled()
   })
 
-  it("disables Sundays even when they're in the future", async () => {
+  it("allows selecting a future Sunday (weekend hours apply)", async () => {
     const onSelectDate = vi.fn()
     render(
       <BookingCalendar
@@ -85,9 +85,9 @@ describe("BookingCalendar", () => {
     // September 20, 2026 is a Sunday.
     const sunday = new Date(2026, 8, 20)
     const sundayButton = screen.getByRole("button", { name: format(sunday, "EEEE, MMMM d") })
-    expect(sundayButton).toBeDisabled()
-    await userEvent.click(sundayButton, { pointerEventsCheck: 0 })
-    expect(onSelectDate).not.toHaveBeenCalled()
+    expect(sundayButton).toBeEnabled()
+    await userEvent.click(sundayButton)
+    expect(onSelectDate).toHaveBeenCalledWith(sunday)
   })
 
   it("calls onSelectDate for a selectable future weekday", async () => {
@@ -124,11 +124,58 @@ describe("BookingCalendar", () => {
     )
   })
 
-  it("calls onSelectTime when a time slot is clicked", async () => {
-    const onSelectTime = vi.fn()
+  it("prompts to pick a date before showing any time slots", () => {
     render(
       <BookingCalendar
         selectedDate={null}
+        selectedTime={null}
+        onSelectDate={() => {}}
+        onSelectTime={() => {}}
+      />,
+    )
+    expect(screen.getByText(/select a date above/i)).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "5:00 PM" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "8:00 AM" })).not.toBeInTheDocument()
+  })
+
+  it("shows evening-only slots for a weekday date", () => {
+    // September 16, 2026 is a Wednesday.
+    const weekday = new Date(2026, 8, 16)
+    render(
+      <BookingCalendar
+        selectedDate={weekday}
+        selectedTime={null}
+        onSelectDate={() => {}}
+        onSelectTime={() => {}}
+      />,
+    )
+    expect(screen.getByRole("button", { name: "5:00 PM" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "6:00 PM" })).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "8:00 AM" })).not.toBeInTheDocument()
+  })
+
+  it("shows full-day slots for a weekend date, including Sunday", () => {
+    // September 20, 2026 is a Sunday.
+    const sunday = new Date(2026, 8, 20)
+    render(
+      <BookingCalendar
+        selectedDate={sunday}
+        selectedTime={null}
+        onSelectDate={() => {}}
+        onSelectTime={() => {}}
+      />,
+    )
+    expect(screen.getByRole("button", { name: "8:00 AM" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "4:00 PM" })).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "5:00 PM" })).not.toBeInTheDocument()
+  })
+
+  it("calls onSelectTime when a time slot is clicked", async () => {
+    const onSelectTime = vi.fn()
+    const saturday = new Date(2026, 8, 19)
+    render(
+      <BookingCalendar
+        selectedDate={saturday}
         selectedTime={null}
         onSelectDate={() => {}}
         onSelectTime={onSelectTime}
@@ -139,9 +186,10 @@ describe("BookingCalendar", () => {
   })
 
   it("marks the selected time slot as pressed", () => {
+    const saturday = new Date(2026, 8, 19)
     render(
       <BookingCalendar
-        selectedDate={null}
+        selectedDate={saturday}
         selectedTime="2:00 PM"
         onSelectDate={() => {}}
         onSelectTime={() => {}}

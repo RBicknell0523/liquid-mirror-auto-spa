@@ -50,7 +50,8 @@ describe("ContactSection", () => {
           >
             Seed
           </button>
-          <button type="button" onClick={() => setSelectedDate(new Date(2026, 9, 20))}>
+          {/* Saturday, October 24, 2026 — a weekend date, since "10:00 AM" below is a weekend-only slot */}
+          <button type="button" onClick={() => setSelectedDate(new Date(2026, 9, 24))}>
             Pick Date
           </button>
           <button type="button" onClick={() => setSelectedTime("10:00 AM")}>

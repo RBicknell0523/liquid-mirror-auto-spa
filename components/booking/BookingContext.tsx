@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
 import { format } from "date-fns"
 import { VEHICLE_SIZE_LABELS, type Category, type VehicleSize } from "@/data/services"
+import { getTimeSlotsForDate } from "@/lib/bookingHours"
 
 export interface BookingItem {
   id: string
@@ -83,7 +84,14 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     return sum + item.pricing[vehicleSize] * item.quantity
   }, 0)
   const hasQuoteItems = items.some((item) => !item.pricing)
-  const canRequestBooking = items.length > 0 && selectedDate !== null && selectedTime !== null
+  // Guards against a stale time selection left over from before the date
+  // changed (e.g. picking an evening weekday slot, then switching to a
+  // weekend date where that time isn't offered).
+  const canRequestBooking =
+    items.length > 0 &&
+    selectedDate !== null &&
+    selectedTime !== null &&
+    getTimeSlotsForDate(selectedDate).includes(selectedTime)
 
   function requestBooking() {
     if (!canRequestBooking || !selectedDate || !selectedTime) return

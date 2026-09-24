@@ -11,7 +11,6 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
-  isSunday,
   isToday,
   startOfDay,
   startOfMonth,
@@ -20,19 +19,7 @@ import {
 } from "date-fns"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-export const TIME_SLOTS = [
-  "8:00 AM",
-  "9:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-]
+import { getTimeSlotsForDate } from "@/lib/bookingHours"
 
 const WEEKDAY_HEADERS = ["S", "M", "T", "W", "T", "F", "S"]
 
@@ -63,8 +50,7 @@ export function BookingCalendar({
       return {
         date,
         isOutsideMonth,
-        // Business is closed Sundays (see data/contactInfo.ts hours).
-        isDisabled: isOutsideMonth || isBefore(date, today) || isSunday(date),
+        isDisabled: isOutsideMonth || isBefore(date, today),
         isToday: isToday(date),
         isSelected: selectedDate ? isSameDay(date, selectedDate) : false,
       }
@@ -72,6 +58,7 @@ export function BookingCalendar({
   }, [currentMonth, selectedDate, today])
 
   const isViewingCurrentMonth = isSameMonth(currentMonth, today)
+  const timeSlots = selectedDate ? getTimeSlotsForDate(selectedDate) : null
 
   return (
     <div>
@@ -136,24 +123,28 @@ export function BookingCalendar({
 
       <div className="mt-6">
         <div className="text-muted text-xs tracking-widest mb-2">SELECT A TIME</div>
-        <div className="grid grid-cols-3 gap-2">
-          {TIME_SLOTS.map((time) => (
-            <button
-              key={time}
-              type="button"
-              aria-pressed={selectedTime === time}
-              onClick={() => onSelectTime(time)}
-              className={cn(
-                "text-xs font-semibold py-2 rounded-lg border",
-                selectedTime === time
-                  ? "border-electric bg-electric-gradient text-white"
-                  : "border-default text-nav hover:border-electric-pale",
-              )}
-            >
-              {time}
-            </button>
-          ))}
-        </div>
+        {timeSlots ? (
+          <div className="grid grid-cols-3 gap-2">
+            {timeSlots.map((time) => (
+              <button
+                key={time}
+                type="button"
+                aria-pressed={selectedTime === time}
+                onClick={() => onSelectTime(time)}
+                className={cn(
+                  "text-xs font-semibold py-2 rounded-lg border",
+                  selectedTime === time
+                    ? "border-electric bg-electric-gradient text-white"
+                    : "border-default text-nav hover:border-electric-pale",
+                )}
+              >
+                {time}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="text-faint text-sm">Select a date above to see available times.</p>
+        )}
       </div>
     </div>
   )

@@ -4,8 +4,8 @@ export const contactInfo = {
   phoneNote: "Call or text for personalized booking",
   email: "liquidmirrorautospa@gmail.com",
   emailNote: "We reply within 24 hours",
-  hours: "Mon – Sat, 8am – 6pm",
-  hoursNote: "Closed Sundays",
+  hours: "Weekdays 5 – 7pm",
+  hoursNote: "Weekends 8am – 5pm",
   socials: [
     { label: "IG", href: "#" },
     { label: "FB", href: "#" },

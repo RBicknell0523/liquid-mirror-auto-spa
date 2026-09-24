@@ -127,10 +127,18 @@ describe("BookingCart", () => {
     const confirmButton = screen.getByRole("button", { name: /confirm booking/i })
     expect(confirmButton).toBeDisabled()
 
+    // Pick a weekend day specifically — time slots are now day-dependent
+    // (weekday evenings only), and "10:00 AM" below is a weekend-only slot.
     const dayButtons = within(screen.getByTestId("calendar-days")).getAllByRole("button")
-    const enabledDay = dayButtons.find((button) => !button.hasAttribute("disabled"))
-    if (!enabledDay) throw new Error("Expected at least one selectable day in the current month")
-    await userEvent.click(enabledDay)
+    const enabledWeekendDay = dayButtons.find(
+      (button) =>
+        !button.hasAttribute("disabled") &&
+        /^(Saturday|Sunday)/.test(button.getAttribute("aria-label") ?? ""),
+    )
+    if (!enabledWeekendDay) {
+      throw new Error("Expected at least one selectable weekend day in the current month")
+    }
+    await userEvent.click(enabledWeekendDay)
     expect(confirmButton).toBeDisabled()
 
     await userEvent.click(screen.getByRole("button", { name: "10:00 AM" }))
