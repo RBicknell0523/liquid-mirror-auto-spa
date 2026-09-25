@@ -69,7 +69,7 @@ export default function OpengraphImage() {
             letterSpacing: 2,
           }}
         >
-          PREMIUM MOBILE AUTO DETAILING · VETERAN OWNED
+          PREMIUM AUTO DETAILING · VETERAN OWNED
         </div>
       </div>
     ),
