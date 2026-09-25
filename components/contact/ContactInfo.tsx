@@ -1,4 +1,5 @@
 import { contactInfo } from "@/data/contactInfo"
+import { NeonButton } from "@/components/ui/NeonButton"
 
 const ROWS = [
   { icon: "☎", label: contactInfo.phone, note: contactInfo.phoneNote },
@@ -23,14 +24,15 @@ export function ContactInfo() {
 
       <div className="flex gap-3 mt-2">
         {contactInfo.socials.map((social) => (
-          <a
+          <NeonButton
             key={social.label}
             href={social.href}
             aria-label={social.label}
-            className="w-11 h-11 rounded-full border border-default flex items-center justify-center text-nav text-sm"
+            className="rounded-full w-14 h-14 p-0 text-base shrink-0"
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
           >
             {social.label}
-          </a>
+          </NeonButton>
         ))}
       </div>
     </div>

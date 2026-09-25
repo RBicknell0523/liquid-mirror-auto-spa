@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { contactInfo } from "@/data/contactInfo"
+import { NeonButton } from "@/components/ui/NeonButton"
 
 const FOOTER_LINKS = [
   { href: "#home", label: "Home" },
@@ -37,14 +38,15 @@ export function Footer() {
 
           <div className="flex gap-3">
             {contactInfo.socials.map((social) => (
-              <a
+              <NeonButton
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="w-9 h-9 rounded-full border border-default flex items-center justify-center text-nav text-sm hover:border-electric hover:text-electric transition-colors"
+                className="rounded-full w-11 h-11 p-0 text-sm shrink-0"
+                style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
               >
                 {social.label}
-              </a>
+              </NeonButton>
             ))}
           </div>
         </div>
