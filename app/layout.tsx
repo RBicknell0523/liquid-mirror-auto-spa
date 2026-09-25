@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { BeamsBackground } from "@/components/BeamsBackground";
 import "./globals.css";
 
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <BeamsBackground />
         {children}
+        <Analytics />
       </body>
     </html>
   );
