@@ -33,8 +33,8 @@ export function Hero() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-9 mt-14 text-faint text-sm tracking-wide">
-          <span>&#9733; 5.0 RATED</span>
-          <span>PROFESSIONAL CLEANING AND PROTECTANTS</span>
+          <span>PREMIUM DETAILING</span>
+          <span>PROFESSIONAL CLEANERS/PROTECTANTS</span>
         </div>
       </div>
 
