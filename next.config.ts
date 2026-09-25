@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { SITE_URL } from "./lib/siteConfig";
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -11,7 +12,7 @@ const nextConfig: NextConfig = {
             value: "liquid-mirror-auto-spa-pi.vercel.app",
           },
         ],
-        destination: "https://www.liquidmirrorautospa.com/:path*",
+        destination: `${SITE_URL}/:path*`,
         permanent: true,
       },
     ];
