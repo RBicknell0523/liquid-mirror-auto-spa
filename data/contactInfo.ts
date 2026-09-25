@@ -6,9 +6,5 @@ export const contactInfo = {
   emailNote: "We reply within 24 hours",
   hours: "Weekdays 5pm - 7pm",
   hoursNote: "Weekends 8am - 5pm",
-  socials: [
-    { label: "IG", href: "#" },
-    { label: "FB", href: "#" },
-    { label: "TT", href: "#" },
-  ],
+  socials: [{ label: "IG", href: "#" }],
 }
